@@ -1,0 +1,20 @@
+{
+  "name": "hubot-timezone",
+  "version": "0.9.0",
+  "description": "Timezone conversion ability for hubot",
+  "main": "index.coffee",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryandao/hubot-timezone"
+  },
+  "author": "Ryan Dao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryandao/hubot-timezone/issues"
+  },
+  "homepage": "https://github.com/ryandao/hubot-timezone",
+  "dependencies": {
+    "coffee-script": "^1.9.3",
+    "moment": "^2.10.3"
+  }
+}

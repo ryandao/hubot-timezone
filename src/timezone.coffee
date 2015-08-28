@@ -31,10 +31,10 @@ formatTime = (timestamp) ->
   return moment.utc(timestamp).format('dddd, MMMM Do YYYY, h:mm:ss a')
 
 # Use Google's Geocode and Timezone APIs to get timezone offset for a location.
-getTimezoneInfo = (httpclient, timestamp, location, callback) ->
+getTimezoneInfo = (res, timestamp, location, callback) ->
   q = querystring.stringify({ address: location, sensor: false })
 
-  httpclient('https://maps.googleapis.com/maps/api/geocode/json?' + q)
+  res.http('https://maps.googleapis.com/maps/api/geocode/json?' + q)
     .get() (err, httpRes, body) ->
       if err
         callback(err, null)
@@ -53,7 +53,7 @@ getTimezoneInfo = (httpclient, timestamp, location, callback) ->
         sensor: false
       })
 
-      httpclient('https://maps.googleapis.com/maps/api/timezone/json?' + tzq)
+      res.http('https://maps.googleapis.com/maps/api/timezone/json?' + tzq)
         .get() (err, httpRes, body) ->
           if err
             callback(err, null)
@@ -74,7 +74,7 @@ getTimezoneInfo = (httpclient, timestamp, location, callback) ->
 # If `fromLocation` is null, send back time in `toLocation`.
 convertTime = (res, timestamp, fromLocation, toLocation) ->
   sendLocalTime = (utcTimestamp, location) ->
-    getTimezoneInfo res.http, utcTimestamp, location, (err, result) ->
+    getTimezoneInfo res, utcTimestamp, location, (err, result) ->
       if (err)
         res.send("I can't find the time at #{location}.")
       else
@@ -82,7 +82,7 @@ convertTime = (res, timestamp, fromLocation, toLocation) ->
         res.send("Time in #{result.formattedAddress} is #{formatTime(localTimestamp)}")
 
   if fromLocation
-    getTimezoneInfo res.http, timestamp, fromLocation, (err, result) ->
+    getTimezoneInfo res, timestamp, fromLocation, (err, result) ->
       if (err)
         res.send("I can't find the time at #{fromLocation}.")
       else

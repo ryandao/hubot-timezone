@@ -1,6 +1,6 @@
 {
   "name": "hubot-timezone",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Timezone conversion ability for hubot",
   "main": "index.coffee",
   "repository": {

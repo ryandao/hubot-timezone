@@ -110,7 +110,8 @@ module.exports = (robot) ->
     defaultOffset = robot.brain.data.timezoneOffset || moment().utcOffset()
     if requestedTime == 'time'
       timestamp = moment().unix()
-    else
+    else if parseTime(requestedTime)
       timestamp = parseTime(requestedTime) - defaultOffset * 60
-    return unless timestamp
+    else
+      return
     convertTime(res, timestamp, null, res.match[2])

@@ -32,7 +32,11 @@ formatTime = (timestamp) ->
 
 # Use Google's Geocode and Timezone APIs to get timezone offset for a location.
 getTimezoneInfo = (res, timestamp, location, callback) ->
-  q = querystring.stringify({ address: location, sensor: false })
+  q = querystring.stringify({ 
+    key: process.env.HUBOT_GOOGLE_MAPS_KEY,
+    address: location, 
+    sensor: false 
+  })
 
   res.http('https://maps.googleapis.com/maps/api/geocode/json?' + q)
     .get() (err, httpRes, body) ->
@@ -48,6 +52,7 @@ getTimezoneInfo = (res, timestamp, location, callback) ->
       latlong = json.results[0].geometry.location
       formattedAddress = json.results[0].formatted_address
       tzq = querystring.stringify({
+        key: process.env.HUBOT_GOOGLE_MAPS_KEY,
         location: latlong.lat + ',' + latlong.lng,
         timestamp: timestamp,
         sensor: false
